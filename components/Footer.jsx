@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <View className=" mt-12 border-t-2 pt-24 mb-10">
+    <View className=" items-center  border-t-2 pt-24">
       
 
       <View className="">

@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
-import key from "../key/API";
+import key from "../../key/API";
 import Footer from "../../components/Footer";
 import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
@@ -44,6 +44,7 @@ export default function HomeScreen() {
         `https://api.themoviedb.org/3/movie/popular?api_key=${key.APIKEY}&language=en-US&page=1`
       );
       setPopular(response.data.results);
+      
     } catch (error) {
       console.log(error);
     }
