@@ -1,10 +1,13 @@
 import { Stack } from "expo-router";
 import "../global.css"
+ import {UserContextProvider} from "../context/UserContext"
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <UserContextProvider>
+      <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />    
     </Stack>
+    </UserContextProvider>
   );
 }
