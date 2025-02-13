@@ -1,29 +1,40 @@
-import { View, Text, Image, TextInput } from "react-native";
-import React, { useContext, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import netflixLogo from "../../assets/netflixlogoo.png";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import {UserContext} from "../../context/UserContext"
-import key from "../../key/API"
-import axios from "axios"
-import backgroundImage from "../../assets/menubackground.jpg"
-
-
-
+import { UserContext } from "../../context/UserContext";
+import key from "../../key/API";
+import axios from "axios";
+import SearchMovie from "../../components/SearchMovie";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const search = () => {
-  const { setSearch,search,setDatasForSearch } = useContext(UserContext);
+  const { setSearch, search, setDatasFromSearch, datasFromSearch } =
+    useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
-  const getDatasOfSearch = async()=>{
-    if(search.length<0) return;
+  const getDatasOfSearch = async () => {
+    setLoading(true);
+    if (search.length === 0) return;
     try {
-      const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${key.APIKEY}&query=${search}`)
-      setDatasForSearch(response.data.result)
-      
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=${key.APIKEY}&query=${search}`
+      );
+      setDatasFromSearch(response.data.results);
     } catch (error) {
-      console.log(error);  
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <SafeAreaView className="w-full h-full bg-black">
@@ -32,7 +43,7 @@ const search = () => {
       </View>
       <View className="items-center pt-3 relative">
         <TextInput
-          onChangeText={(text) =>setSearch(text) }
+          onChangeText={(text) => setSearch(text)}
           value={search}
           placeholder="Enter a movie or series"
           className="border px-2  border-gray-500 w-[90%] text-white placeholder:text-gray-200"
@@ -45,16 +56,23 @@ const search = () => {
           color="gray"
         />
       </View>
-      <View className="w-full h-[400px] bg-white items-center">
-        <Image
-        className="w-[300px] h-[200px]"
-        resizeMode="contain" 
-        source={backgroundImage}
+
+      {!loading ? (
+        <FlatList
+          contentContainerStyle={{ gap: 40 }}
+          data={datasFromSearch}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <SearchMovie item={item} />}
         />
-        <View className="w-full p-5 px-10">
-          <Text className="text-black">Imdb/10</Text>
+      ) : (
+        <View className="pt-24">
+          <ActivityIndicator
+            size={"large"}
+            animating={true}
+            color={MD2Colors.blue800}
+          />
         </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };
