@@ -20,6 +20,7 @@ const search = () => {
   const { setSearch, search, setDatasFromSearch, datasFromSearch } =
     useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [isUserSearchedData,setIsUserSearchedData] = useState(false);
 
   const getDatasOfSearch = async () => {
     setLoading(true);
@@ -29,10 +30,12 @@ const search = () => {
         `https://api.themoviedb.org/3/search/movie?api_key=${key.APIKEY}&query=${search}`
       );
       setDatasFromSearch(response.data.results);
+      setIsUserSearchedData(true);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+      setSearch("");
     }
   };
 
@@ -46,24 +49,38 @@ const search = () => {
           onChangeText={(text) => setSearch(text)}
           value={search}
           placeholder="Enter a movie or series"
-          className="border px-2  border-gray-500 w-[90%] text-white placeholder:text-gray-200"
+          className="border px-2  border-gray-500 w-[80%] text-white placeholder:text-gray-200"
         />
         <AntDesign
           onPress={getDatasOfSearch}
-          className="absolute right-7 top-5 cursor-pointer"
+          className="absolute right-14 top-5 cursor-pointer"
           size={24}
+          disabled={search === ""}
           name="search1"
           color="gray"
         />
       </View>
 
       {!loading ? (
-        <FlatList
-          contentContainerStyle={{ gap: 40 }}
-          data={datasFromSearch}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <SearchMovie item={item} />}
-        />
+        isUserSearchedData &&
+        datasFromSearch.length === 0 ? (
+          <View className="items-center pt-40 w-full h-full opacity-80">
+            <AntDesign name="frown" size={50} color="gray" />
+            <Text className="text-white text-3xl font-bold mt-4">
+              No Results Found
+            </Text>
+            <Text className="text-gray-400 text-base mt-2">
+              Try searching for a different movie or series.
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            contentContainerStyle={{ gap: 50 }}
+            data={datasFromSearch}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <SearchMovie item={item} />}
+          />
+        )
       ) : (
         <View className="pt-24">
           <ActivityIndicator

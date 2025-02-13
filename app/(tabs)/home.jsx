@@ -7,26 +7,27 @@ import {
   FlatList,
   Animated,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import key from "../../key/API";
 import Footer from "../../components/Footer";
 import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
+import { UserContext } from "../../context/UserContext";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [opacity] = useState(new Animated.Value(0)); 
+  const [opacity] = useState(new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(opacity, {
-      toValue: 1, 
+      toValue: 1,
       duration: 500,
-      useNativeDriver: true, 
+      useNativeDriver: true,
     }).start();
 
     setTimeout(() => {
@@ -44,7 +45,6 @@ export default function HomeScreen() {
         `https://api.themoviedb.org/3/movie/popular?api_key=${key.APIKEY}&language=en-US&page=1`
       );
       setPopular(response.data.results);
-      
     } catch (error) {
       console.log(error);
     }
@@ -99,49 +99,49 @@ export default function HomeScreen() {
           />
         </View>
 
-       <View className="flex-col ">
-       <View className="p-7 flex-col gap-3">
-          <Text className="text-gray-300 text-base  pt-6 font-bold">
-            Popular on Netflix
-          </Text>
-          <FlatList
-            className=""
-            horizontal
-            data={popular}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <MovieItem item={item} />}
-            contentContainerStyle={{ gap: 20 }}
-          />
-        </View>
+        <View className="flex-col ">
+          <View className="p-7 flex-col gap-3">
+            <Text className="text-gray-300 text-base  pt-6 font-bold">
+              Popular on Netflix
+            </Text>
+            <FlatList
+              className=""
+              horizontal
+              data={popular}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <MovieItem item={item} />}
+              contentContainerStyle={{ gap: 20 }}
+            />
+          </View>
 
-        <View className="p-7 flex-col gap-3">
-          <Text className="text-gray-300 text-base  pt-6 font-bold">
-            Movies
-          </Text>
-          <FlatList
-            className=""
-            horizontal
-            data={movies}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <MovieItem item={item} />}
-            contentContainerStyle={{ gap: 20 }}
-          />
-        </View>
+          <View className="p-7 flex-col gap-3">
+            <Text className="text-gray-300 text-base  pt-6 font-bold">
+              Movies
+            </Text>
+            <FlatList
+              className=""
+              horizontal
+              data={movies}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <MovieItem item={item} />}
+              contentContainerStyle={{ gap: 20 }}
+            />
+          </View>
 
-        <View className="p-7 flex-col gap-3">
-          <Text className="text-gray-300 text-base pt-6 font-bold">
-            Series
-          </Text>
-          <FlatList
-            className=""
-            horizontal
-            data={series}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <MovieItem item={item} />}
-            contentContainerStyle={{ gap: 20 }}
-          />
+          <View className="p-7 flex-col gap-3">
+            <Text className="text-gray-300 text-base pt-6 font-bold">
+              Series
+            </Text>
+            <FlatList
+              className=""
+              horizontal
+              data={series}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <MovieItem item={item} />}
+              contentContainerStyle={{ gap: 20 }}
+            />
+          </View>
         </View>
-       </View>
 
         <Footer />
       </ScrollView>
