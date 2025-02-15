@@ -6,7 +6,8 @@ export default function RootLayout() {
   return (
     <UserContextProvider>
       <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" />    
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="detail/[id]" />    
     </Stack>
     </UserContextProvider>
   );
