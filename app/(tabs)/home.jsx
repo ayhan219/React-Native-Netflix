@@ -6,15 +6,15 @@ import {
   ScrollView,
   FlatList,
   Animated,
+  TouchableOpacity,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import key from "../../key/API";
 import Footer from "../../components/Footer";
 import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
-import { UserContext } from "../../context/UserContext";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
@@ -26,18 +26,16 @@ export default function HomeScreen() {
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 500,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
 
-    setTimeout(() => {
-      if (counter === 5) {
-        setCounter(0);
-      } else {
-        setCounter((prevCounter) => prevCounter + 1);
-      }
+    const interval = setInterval(() => {
+      setCounter((prev) => (prev === 5 ? 0 : prev + 1));
     }, 5000);
-  }, [counter]);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const getPopular = async () => {
     try {
@@ -53,9 +51,9 @@ export default function HomeScreen() {
   const getMovies = async () => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${key.APIKEY}&language=en-US&page=2`
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key.APIKEY}&language=en-US&page=1`
       );
-      setSeries(response.data.results);
+      setMovies(response.data.results);
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +64,7 @@ export default function HomeScreen() {
       const response = await axios.get(
         `https://api.themoviedb.org/3/tv/popular?api_key=${key.APIKEY}&language=en-US&page=1`
       );
-      setMovies(response.data.results);
+      setSeries(response.data.results);
     } catch (error) {
       console.log(error);
     }
@@ -81,68 +79,79 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className="bg-black w-full h-full">
       <ScrollView>
-        <View className="items-center pt-8">
-          <Image
-            source={netflixLogo}
-            className="w-32 h-24"
-            resizeMode="contain"
-          />
+        {/* Netflix Logo */}
+        <View className="items-center pt-5">
+          <Image source={netflixLogo} className="w-36 h-20" resizeMode="contain" />
         </View>
 
-        <View className="w-full relative p-5">
+        {/* Hero Section with Overlay */}
+        <View className="w-full h-[500px] relative p-4">
           <Animated.Image
-            style={{ width: "100%", height: 350, opacity }} // Animated opacity
-            resizeMode="contain"
+            style={{ width: "100%", height: "100%", opacity, borderRadius: 10 }}
+            resizeMode="cover"
             source={{
               uri: `https://image.tmdb.org/t/p/w500${popular[counter]?.poster_path}`,
             }}
           />
+          <View className="absolute inset-0 bg-black opacity-30 rounded-lg" />
+          <View className="absolute bottom-10 left-5">
+            <Text className="text-white text-2xl font-bold">
+              {popular[counter]?.title}
+            </Text>
+            <Text className="text-gray-300 font-semibold text-sm w-[50%]">
+              {popular[counter]?.overview.length > 120
+                ? `${popular[counter]?.overview.slice(0, 120)}...`
+                : popular[counter]?.overview}
+            </Text>
+
+          </View>
         </View>
 
+        {/* Movie Categories */}
         <View className="flex-col ">
-          <View className="p-7 flex-col gap-3">
-            <Text className="text-gray-300 text-base  pt-6 font-bold">
-              Popular on Netflix
+          {/* Popular Movies */}
+          <View className="p-6">
+            <Text className="text-gray-300 text-lg font-bold mb-3">
+              🔥 Popular on Netflix
             </Text>
             <FlatList
-              className=""
               horizontal
               data={popular}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => <MovieItem item={item} />}
               contentContainerStyle={{ gap: 20 }}
+              showsHorizontalScrollIndicator={false}
             />
           </View>
 
-          <View className="p-7 flex-col gap-3">
-            <Text className="text-gray-300 text-base  pt-6 font-bold">
-              Movies
-            </Text>
+          {/* Movies */}
+          <View className="p-6">
+            <Text className="text-gray-300 text-lg font-bold mb-3">🎬 Movies</Text>
             <FlatList
-              className=""
               horizontal
               data={movies}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => <MovieItem item={item} />}
               contentContainerStyle={{ gap: 20 }}
+              showsHorizontalScrollIndicator={false}
             />
           </View>
 
-          <View className="p-7 flex-col gap-3">
-            <Text className="text-gray-300 text-base pt-6 font-bold">
-              Series
-            </Text>
+          {/* Series */}
+          <View className="p-6">
+            <Text className="text-gray-300 text-lg font-bold mb-3">📺 Series</Text>
             <FlatList
-              className=""
               horizontal
               data={series}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => <MovieItem item={item} />}
               contentContainerStyle={{ gap: 20 }}
+              showsHorizontalScrollIndicator={false}
             />
           </View>
         </View>
 
+        {/* Footer */}
         <Footer />
       </ScrollView>
 
