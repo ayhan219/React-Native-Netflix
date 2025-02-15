@@ -118,10 +118,11 @@ const Detail = () => {
           "{detailData.tagline}"
         </Text>
       ) : null}
-      <View className="pt-10 px-6">
+      <View className="pt-10 px-6 flex-col">
         <Text className="text-gray-400 text-lg font-semibold">
           Production Companies
         </Text>
+        <View className="pt-4 flex-col gap-1">
         {
           detailData.production_companies?.map((item)=>(
             <Text key={item.id} className="text-gray-300 text-sm">
@@ -129,6 +130,7 @@ const Detail = () => {
             </Text>
           ))
         }
+        </View>
       </View>
       <View className="w-full items-center">
         <TouchableOpacity
