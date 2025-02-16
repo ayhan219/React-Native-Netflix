@@ -35,15 +35,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="download"
-        options={{
-          title: "Download",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="download" size={size} color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }
