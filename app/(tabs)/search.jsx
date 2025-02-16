@@ -20,7 +20,7 @@ const search = () => {
   const { setSearch, search, setDatasFromSearch, datasFromSearch } =
     useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  const [isUserSearchedData,setIsUserSearchedData] = useState(false);
+  const [isUserSearchedData, setIsUserSearchedData] = useState(false);
 
   const getDatasOfSearch = async () => {
     setLoading(true);
@@ -60,10 +60,8 @@ const search = () => {
           color="gray"
         />
       </View>
-
       {!loading ? (
-        isUserSearchedData &&
-        datasFromSearch.length === 0 ? (
+        isUserSearchedData && datasFromSearch.length === 0 ? (
           <View className="items-center pt-40 w-full h-full opacity-80">
             <AntDesign name="frown" size={50} color="gray" />
             <Text className="text-white text-3xl font-bold mt-4">

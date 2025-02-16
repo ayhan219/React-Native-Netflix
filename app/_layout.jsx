@@ -7,7 +7,8 @@ export default function RootLayout() {
     <UserContextProvider>
       <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="detail/[id]" />    
+      <Stack.Screen name="detail/[id]" /> 
+      <Stack.Screen name="movies/movie" />
     </Stack>
     </UserContextProvider>
   );

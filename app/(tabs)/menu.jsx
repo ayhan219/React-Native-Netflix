@@ -30,7 +30,9 @@ const Menu = () => {
           <Text className="text-white text-lg">Search</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="flex-row items-center gap-4 py-3 px-4 rounded-md">
+        <TouchableOpacity
+        onPress={()=>router.push("/movies/movie")}
+        className="flex-row items-center gap-4 py-3 px-4 rounded-md">
           <MaterialIcons name="movie" size={24} color="white" />
           <Text className="text-white text-lg">Movies</Text>
         </TouchableOpacity>
