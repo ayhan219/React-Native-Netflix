@@ -8,7 +8,7 @@ import {
   Animated,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import key from "../../key/API";
@@ -17,12 +17,16 @@ import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
 import { MotiImage, MotiText } from "moti";
 import { AnimatePresence } from "moti";
+import { useRouter } from "expo-router";
+import { UserContext } from "../../context/UserContext";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [counter, setCounter] = useState(0);
+  const router = useRouter();
+  const {setSingleData} = useContext(UserContext);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -84,6 +88,11 @@ export default function HomeScreen() {
         </View>
 
         {/* Hero Section with Overlay */}
+        <TouchableOpacity onPress={()=>{
+          setSingleData(popular[counter])
+          router.push(`/detail/${popular[counter]?.id}`)
+
+        }}>
         <View className="w-full h-[500px] relative p-4">
           <AnimatePresence exitBeforeEnter>
             <MotiImage
@@ -121,6 +130,7 @@ export default function HomeScreen() {
             </MotiText>
           </View>
         </View>
+        </TouchableOpacity>
 
         {/* Movie Categories */}
         <View className="flex-col ">

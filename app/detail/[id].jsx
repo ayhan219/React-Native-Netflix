@@ -116,7 +116,7 @@ const Detail = () => {
               <Text className="text-white text-xs">Share</Text>
             </View>
           </View>
-          <View className="items-center px-3">
+          <View className="px-4">
             <View className="flex-row flex-wrap gap-2">
               {detailData.genres?.map((item) => (
                 <View
