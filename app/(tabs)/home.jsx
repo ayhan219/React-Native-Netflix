@@ -15,27 +15,22 @@ import key from "../../key/API";
 import Footer from "../../components/Footer";
 import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
+import { MotiImage, MotiText } from "moti";
+import { AnimatePresence } from "moti";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [opacity] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-
     const interval = setInterval(() => {
       setCounter((prev) => (prev === 5 ? 0 : prev + 1));
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [counter]);
 
   const getPopular = async () => {
     try {
@@ -81,29 +76,49 @@ export default function HomeScreen() {
       <ScrollView>
         {/* Netflix Logo */}
         <View className="items-center pt-5">
-          <Image source={netflixLogo} className="w-36 h-20" resizeMode="contain" />
+          <Image
+            source={netflixLogo}
+            className="w-36 h-20"
+            resizeMode="contain"
+          />
         </View>
 
         {/* Hero Section with Overlay */}
         <View className="w-full h-[500px] relative p-4">
-          <Animated.Image
-            style={{ width: "100%", height: "100%", opacity, borderRadius: 10 }}
-            resizeMode="cover"
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500${popular[counter]?.poster_path}`,
-            }}
-          />
+          <AnimatePresence exitBeforeEnter>
+            <MotiImage
+              key={popular[counter]?.id}
+              from={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ type: "timing", duration: 1000 }}
+              style={{ width: "100%", height: "100%", borderRadius: 10 }}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${popular[counter]?.poster_path}`,
+              }}
+            />
+          </AnimatePresence>
           <View className="absolute inset-0 bg-black opacity-30 rounded-lg" />
           <View className="absolute bottom-10 left-5">
-            <Text className="text-white text-2xl font-bold">
+            <MotiText
+              from={{ opacity: 0, translateY: 20 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ type: "timing", duration: 800 }}
+              className="text-white text-2xl font-bold"
+            >
               {popular[counter]?.title}
-            </Text>
-            <Text className="text-gray-300 font-semibold text-sm w-[50%]">
+            </MotiText>
+
+            <MotiText
+              from={{ opacity: 0, translateY: 20 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ type: "timing", duration: 1000, delay: 200 }}
+              className="text-gray-300 font-semibold text-sm w-[50%]"
+            >
               {popular[counter]?.overview.length > 120
                 ? `${popular[counter]?.overview.slice(0, 120)}...`
                 : popular[counter]?.overview}
-            </Text>
-
+            </MotiText>
           </View>
         </View>
 
@@ -126,7 +141,9 @@ export default function HomeScreen() {
 
           {/* Movies */}
           <View className="p-6">
-            <Text className="text-gray-300 text-lg font-bold mb-3">🎬 Movies</Text>
+            <Text className="text-gray-300 text-lg font-bold mb-3">
+              🎬 Movies
+            </Text>
             <FlatList
               horizontal
               data={movies}
@@ -139,7 +156,9 @@ export default function HomeScreen() {
 
           {/* Series */}
           <View className="p-6">
-            <Text className="text-gray-300 text-lg font-bold mb-3">📺 Series</Text>
+            <Text className="text-gray-300 text-lg font-bold mb-3">
+              📺 Series
+            </Text>
             <FlatList
               horizontal
               data={series}
