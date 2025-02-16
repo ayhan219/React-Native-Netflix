@@ -11,28 +11,35 @@ const Menu = () => {
     <SafeAreaView className="flex-1 bg-black px-6">
       {/* Netflix Logo */}
       <View className="items-center my-6">
-        <Image source={netflixLogo} className="w-32 h-20" resizeMode="contain" />
+        <Image
+          source={netflixLogo}
+          className="w-32 h-20"
+          resizeMode="contain"
+        />
       </View>
 
       {/* Menu Items */}
       <View className="mt-4">
         <TouchableOpacity
-        onPress={()=>router.push("/home")}
-        className="flex-row items-center gap-4 py-3 px-4 rounded-md">
+          onPress={() => router.push("/home")}
+          className="flex-row items-center gap-4 py-3 px-4 rounded-md"
+        >
           <Ionicons name="home-outline" size={24} color="white" />
           <Text className="text-white text-lg">Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-        onPress={()=>router.push("/search")}
-        className="flex-row items-center gap-4 py-3 px-4 rounded-md">
+          onPress={() => router.push("/search")}
+          className="flex-row items-center gap-4 py-3 px-4 rounded-md"
+        >
           <Ionicons name="search-outline" size={24} color="white" />
           <Text className="text-white text-lg">Search</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-        onPress={()=>router.push("/movies/movie")}
-        className="flex-row items-center gap-4 py-3 px-4 rounded-md">
+          onPress={() => router.push("/movies/movies")}
+          className="flex-row items-center gap-4 py-3 px-4 rounded-md"
+        >
           <MaterialIcons name="movie" size={24} color="white" />
           <Text className="text-white text-lg">Movies</Text>
         </TouchableOpacity>
@@ -47,8 +54,6 @@ const Menu = () => {
           <Text className="text-white text-lg">My List</Text>
         </TouchableOpacity>
       </View>
-
-     
     </SafeAreaView>
   );
 };
