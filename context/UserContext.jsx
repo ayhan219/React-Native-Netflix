@@ -6,6 +6,7 @@ export const UserContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [datasFromSearch,setDatasFromSearch] = useState([]);
   const [singleData,setSingleData] = useState([]);
+  const [whereIsUser,setWhereIsUser] = useState("");
 
   return (
     <UserContext.Provider
@@ -15,7 +16,9 @@ export const UserContextProvider = ({ children }) => {
         datasFromSearch,
         setDatasFromSearch,
         singleData,
-        setSingleData
+        setSingleData,
+        whereIsUser,
+        setWhereIsUser
       }}
     >
       {children}
