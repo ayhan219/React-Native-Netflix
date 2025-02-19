@@ -19,6 +19,7 @@ import { MotiImage, MotiText } from "moti";
 import { AnimatePresence } from "moti";
 import { useRouter } from "expo-router";
 import { UserContext } from "../../context/UserContext";
+import { useSearchParams } from "expo-router/build/hooks";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
@@ -26,7 +27,11 @@ export default function HomeScreen() {
   const [series, setSeries] = useState([]);
   const [counter, setCounter] = useState(0);
   const router = useRouter();
-  const {setSingleData} = useContext(UserContext);
+  const {setSingleData,whereIsUser,setWhereIsUser} = useContext(UserContext);
+
+  const searchParams = useSearchParams();
+  const param = searchParams.get("param");
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,6 +78,8 @@ export default function HomeScreen() {
     getPopular();
     getMovies();
     getSeries();
+    console.log(param);
+    
   }, []);
 
   return (

@@ -44,7 +44,10 @@ const Detail = () => {
     }
   };
   useEffect(() => {
+    console.log("is data getted ??",singleData);
     getSpecificData();
+    
+    
   }, []);
 
   return (
