@@ -16,7 +16,7 @@ import axios from "axios";
 import SearchMovie from "../../components/SearchMovie";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
-const search = () => {
+const Search = () => {
   const { setSearch, search, setDatasFromSearch, datasFromSearch } =
     useContext(UserContext);
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ const search = () => {
           onChangeText={(text) => setSearch(text)}
           value={search}
           placeholder="Enter a movie or series"
-          className="border px-2  border-gray-500 w-[80%] text-white placeholder:text-gray-200"
+          className="border px-2 border-gray-500 w-[80%] text-white placeholder:text-gray-200"
         />
         <AntDesign
           onPress={getDatasOfSearch}
@@ -60,26 +60,15 @@ const search = () => {
           color="gray"
         />
       </View>
-      {!loading ? (
-        isUserSearchedData && datasFromSearch.length === 0 ? (
-          <View className="items-center pt-40 w-full h-full opacity-80">
-            <AntDesign name="frown" size={50} color="gray" />
-            <Text className="text-white text-3xl font-bold mt-4">
-              No Results Found
-            </Text>
-            <Text className="text-gray-400 text-base mt-2">
-              Try searching for a different movie or series.
-            </Text>
-          </View>
-        ) : (
-          <FlatList
-            contentContainerStyle={{ gap: 50 }}
-            data={datasFromSearch}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <SearchMovie item={item} />}
-          />
-        )
-      ) : (
+      {datasFromSearch.length === 0 && !isUserSearchedData && !loading ? (
+        <View className="flex-1 items-center justify-center opacity-80">
+          <AntDesign name="search1" size={50} color="gray" />
+          <Text className="text-white text-3xl font-bold mt-4">Search Movies</Text>
+          <Text className="text-gray-400 text-base mt-2">
+            Start by typing a movie or series name.
+          </Text>
+        </View>
+      ) : loading ? (
         <View className="pt-24">
           <ActivityIndicator
             size={"large"}
@@ -87,9 +76,26 @@ const search = () => {
             color={MD2Colors.blue800}
           />
         </View>
+      ) : isUserSearchedData && datasFromSearch.length === 0 ? (
+        <View className="items-center pt-40 w-full h-full opacity-80">
+          <AntDesign name="frown" size={50} color="gray" />
+          <Text className="text-white text-3xl font-bold mt-4">
+            No Results Found
+          </Text>
+          <Text className="text-gray-400 text-base mt-2">
+            Try searching for a different movie or series.
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={{ gap: 50 }}
+          data={datasFromSearch}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <SearchMovie item={item} />}
+        />
       )}
     </SafeAreaView>
   );
 };
 
-export default search;
+export default Search;
