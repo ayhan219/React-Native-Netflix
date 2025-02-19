@@ -1,10 +1,13 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import backgroundImage from "../assets/menubackground.jpg";
+import { useRouter } from 'expo-router';
 
 const SearchMovie = ({item}) => {
+  const router = useRouter();
   return (
-    <View className="w-full h-[350px] items-center pt-4">
+    <TouchableOpacity onPress={()=>router.push(`/detail/${item.id}`)}>
+      <View className="w-full h-[350px] items-center pt-4">
         <View className="w-[80%] h-auto border border-gray-500 items-center">
           <Image
             className="w-[300px] h-[150px]"
@@ -52,6 +55,7 @@ const SearchMovie = ({item}) => {
           </View>
         </View>
       </View>
+    </TouchableOpacity>
   )
 }
 
