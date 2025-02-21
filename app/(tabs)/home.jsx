@@ -27,11 +27,11 @@ export default function HomeScreen() {
   const [series, setSeries] = useState([]);
   const [counter, setCounter] = useState(0);
   const router = useRouter();
-  const {setSingleData,whereIsUser,setWhereIsUser} = useContext(UserContext);
+  const { setSingleData, whereIsUser, setWhereIsUser } =
+    useContext(UserContext);
 
   const searchParams = useSearchParams();
   const param = searchParams.get("param");
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -79,7 +79,6 @@ export default function HomeScreen() {
     getMovies();
     getSeries();
     console.log(param);
-    
   }, []);
 
   return (
@@ -95,48 +94,27 @@ export default function HomeScreen() {
         </View>
 
         {/* Hero Section with Overlay */}
-        <TouchableOpacity onPress={()=>{
-          setSingleData(popular[counter])
-          router.push(`/detail/${popular[counter]?.id}`)
-
-        }}>
-        <View className="w-full h-[500px] relative p-4">
-          <AnimatePresence exitBeforeEnter>
-            <MotiImage
-              key={popular[counter]?.id}
-              from={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ type: "timing", duration: 1000 }}
-              style={{ width: "100%", height: "100%", borderRadius: 10 }}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${popular[counter]?.poster_path}`,
-              }}
-            />
-          </AnimatePresence>
-          <View className="absolute inset-0 bg-black opacity-30 rounded-lg" />
-          <View className="absolute bottom-10 left-5">
-            <MotiText
-              from={{ opacity: 0, translateY: 20 }}
-              animate={{ opacity: 1, translateY: 0 }}
-              transition={{ type: "timing", duration: 800 }}
-              className="text-white text-2xl font-bold"
-            >
-              {popular[counter]?.title}
-            </MotiText>
-
-            <MotiText
-              from={{ opacity: 0, translateY: 20 }}
-              animate={{ opacity: 1, translateY: 0 }}
-              transition={{ type: "timing", duration: 1000, delay: 200 }}
-              className="text-gray-300 font-semibold text-sm w-[50%]"
-            >
-              {popular[counter]?.overview.length > 120
-                ? `${popular[counter]?.overview.slice(0, 120)}...`
-                : popular[counter]?.overview}
-            </MotiText>
+        <TouchableOpacity
+          onPress={() => {
+            setSingleData(popular[counter]);
+            router.push(`/detail/${popular[counter]?.id}`);
+          }}
+        >
+          <View className="w-full h-[500px] relative p-4">
+            <AnimatePresence exitBeforeEnter>
+              <MotiImage
+                key={popular[counter]?.id}
+                from={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: "timing", duration: 1000 }}
+                style={{ width: "100%", height: "100%", borderRadius: 10 }}
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${popular[counter]?.poster_path}`,
+                }}
+              />
+            </AnimatePresence>
           </View>
-        </View>
         </TouchableOpacity>
 
         {/* Movie Categories */}
