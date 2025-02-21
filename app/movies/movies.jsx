@@ -5,18 +5,22 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import key from "../../key/API";
 import SearchMovie from "../../components/SearchMovie";
 import { FontAwesome } from "@expo/vector-icons";
 import { MD2Colors } from "react-native-paper";
+import { usePathname } from "expo-router";
+import { UserContext } from "../../context/UserContext";
 
 const Movie = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+   const searchParams = usePathname()
+   const {setWhereIsUser} = useContext(UserContext);
 
   const getMovies = async () => {
     if (loading) return;
@@ -38,6 +42,7 @@ const Movie = () => {
 
   useEffect(() => {
     getMovies();
+    setWhereIsUser(searchParams)  
   }, []);
 
   return (

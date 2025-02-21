@@ -17,9 +17,8 @@ import MovieItem from "../../components/MovieItem";
 import netflixLogo from "../../assets/netflixlogoo.png";
 import { MotiImage, MotiText } from "moti";
 import { AnimatePresence } from "moti";
-import { useRouter } from "expo-router";
+import { useGlobalSearchParams, useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import { UserContext } from "../../context/UserContext";
-import { useSearchParams } from "expo-router/build/hooks";
 
 export default function HomeScreen() {
   const [popular, setPopular] = useState([]);
@@ -30,8 +29,7 @@ export default function HomeScreen() {
   const { setSingleData, whereIsUser, setWhereIsUser } =
     useContext(UserContext);
 
-  const searchParams = useSearchParams();
-  const param = searchParams.get("param");
+  const searchParams = usePathname()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,7 +76,7 @@ export default function HomeScreen() {
     getPopular();
     getMovies();
     getSeries();
-    console.log(param);
+    setWhereIsUser(searchParams)
   }, []);
 
   return (

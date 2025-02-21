@@ -19,7 +19,7 @@ import key from "../../key/API";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const Detail = () => {
-  const { singleData } = useContext(UserContext);
+  const { singleData,whereIsUser } = useContext(UserContext);
   const [detailData, setDetailData] = useState([]);
   const [endPoint, setEndPoint] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,7 +62,7 @@ const Detail = () => {
             resizeMode="contain"
           />
           <AntDesign
-            onPress={() => router.push("/home")}
+            onPress={() => router.push(whereIsUser)}
             name="leftcircle"
             className="absolute top-14 left-4"
             size={30}
