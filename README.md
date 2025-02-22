@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+# Netflix Clone (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a Netflix-like mobile application built using React Native and Expo. It fetches movie data from TheMovieDB API and displays them in a well-structured UI. The design is implemented using NativeWind (Tailwind for React Native) to ensure a modern and responsive layout.
 
-## Get started
+## Features
 
-1. Install dependencies
+-Fetches trending movies and TV shows from TheMovieDB API
 
-   ```bash
-   npm install
-   ```
+-Displays movie details such as title, rating, and description
 
-2. Start the app
+-Categorized sections for different genres
 
-   ```bash
-    npx expo start
-   ```
+-Responsive UI with NativeWind
 
-In the output, you'll find options to open the app in a
+-Smooth navigation and clean animations
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+-Built using Expo for easier development and testing
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Prerequisites
 
-## Get a fresh project
+Before running this project, ensure you have the following installed:
 
-When you're ready, run:
+Node.js (>= 14)
+
+Expo CLI (npm install -g expo-cli)
+
+Android Studio (for Android Emulator) or Xcode (for iOS Simulator)
+
+TheMovieDB API Key (Create an account at TheMovieDB and get an API key)
+
+
+### 1. Clone the Repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/ayhan219/React-Native-Movie-App.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Install Dependencies
+```bash
+npm install  # or yarn install
+```
 
-## Learn more
+### 3. Create a folder named key and inside it, create a file called API.js. Then, export the key as follows
 
-To learn more about developing your project with Expo, look at the following resources:
+const key = {
+   "your key"
+};
+export default key;
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 4. Run the App
 
-## Join the community
+```bash
+npx expo start
+```
 
-Join our community of developers creating universal apps.
+Then, scan the QR code with your Expo Go app or run it on an emulator:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Android: npx expo run:android
+
+iOS: npx expo run:ios
+
+
+## Technologies Used
+
+React Native – for building the mobile application
+
+Expo – for fast development and testing
+
+NativeWind – Tailwind CSS for React Native
+
+Axios – for fetching data from TheMovieDB API
+
+React Navigation – for handling navigation
+
+## Screenshots
+
+![image](https://github.com/user-attachments/assets/d2036c39-d2d1-4cc6-8306-b43a15323e3a)
+
+![image](https://github.com/user-attachments/assets/60aaab70-7927-4b64-8a89-28dafb2a960e)
+
+![image](https://github.com/user-attachments/assets/450cfa9b-a782-41af-8ff4-12ebe692b1b8)
+
+
+
+
