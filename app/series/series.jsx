@@ -25,7 +25,8 @@ const series = () => {
         `https://api.themoviedb.org/3/tv/popular?api_key=${key.APIKEY}&language=en-US&page=${page}
 `
       );
-
+      console.log(response.data.results);
+      
       setSeries((prevMovies) => [...prevMovies, ...response.data.results]);
       setPage((prevPage) => prevPage + 1);
     } catch (error) {
@@ -52,7 +53,7 @@ const series = () => {
       </View>
       <FlatList
         data={series}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         contentContainerStyle={{ gap: 60, paddingBottom: 30 }}
         renderItem={({ item }) => <SearchMovie item={item} />}
         showsVerticalScrollIndicator={false}

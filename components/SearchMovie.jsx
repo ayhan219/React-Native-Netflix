@@ -27,7 +27,7 @@ const SearchMovie = ({ item }) => {
             {/* Movie Name */}
             <View className="flex-row items-center gap-2 mb-2">
               <Text className="text-white font-bold text-base">🎬 Name:</Text>
-              <Text className="text-gray-300 text-base">{item.title}</Text>
+              <Text className="text-gray-300 text-base">{item.title ? item.title : item.name}</Text>
             </View>
 
             {/* IMDb Rating */}
@@ -43,7 +43,7 @@ const SearchMovie = ({ item }) => {
               <Text className="text-white font-bold text-sm">
                 📅 Release Date:
               </Text>
-              <Text className="text-gray-300 text-sm">{item.release_date}</Text>
+              <Text className="text-gray-300 text-sm">{item.release_date ? item.release_date : item.first_air_date}</Text>
             </View>
 
             {/* Genre */}
