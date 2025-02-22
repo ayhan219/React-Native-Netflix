@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="detail/[id]" />
         <Stack.Screen name="movies/movies" />
+        <Stack.Screen name="series/series" />
       </Stack>
     </UserContextProvider>
   );

@@ -44,7 +44,9 @@ const Menu = () => {
           <Text className="text-white text-lg">Movies</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="flex-row items-center gap-4 py-3 px-4 rounded-md">
+        <TouchableOpacity
+        onPress={()=>router.push("/series/series")}
+        className="flex-row items-center gap-4 py-3 px-4 rounded-md">
           <Ionicons name="tv-outline" size={24} color="white" />
           <Text className="text-white text-lg">TV Series</Text>
         </TouchableOpacity>
